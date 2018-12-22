@@ -12,7 +12,8 @@ function love.load()
         resizable = true
     })
 
-    carrots = Carrots(10)
+    carrots = Food(15, 70)
+    shrums = Food(15, -50)
     rabbit = Rabbit(500,350)
     love.keyboard.keysPressed = {}
 
@@ -38,8 +39,8 @@ function love.update(dt)
     mouseX = love.mouse.getX()
     mouseY = love.mouse.getY()
     mouse = MVector(mouseX, mouseY)
-
-    rabbit:goals(carrots)
+    rabbit:eats(shrums)
+    rabbit:eats(carrots)
     rabbit:update()
     love.keyboard.keysPressed = {}
 end
@@ -47,6 +48,10 @@ end
 function love.draw()
     push:start()
     rabbit:render()
+    love.graphics.setColor(0, 1, 0, 1)
     carrots:render()
+    love.graphics.setColor(1, 0, 0, 1)
+    shrums:render()
+    love.graphics.reset()
     push:finish()
 end

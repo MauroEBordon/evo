@@ -85,3 +85,14 @@ function MVector:heading()
     angle = math.atan2(self.y, self.x)
     return angle
 end
+
+MVArray = Class{}
+
+function MVArray:init(n)
+  self.array = {}
+  self.n = n
+
+  for i = 1, n, 1 do
+      self.array[i] = MVector(math.random(0,VIRTUAL_WIDTH - 10), math.random(0,VIRTUAL_HEIGHT - 10))
+  end
+end
