@@ -12,7 +12,7 @@ function love.load()
         resizable = true
     })
 
-    carrots = Carrots(15)
+    carrots = Carrots(10)
     rabbit = Rabbit(500,350)
     love.keyboard.keysPressed = {}
 

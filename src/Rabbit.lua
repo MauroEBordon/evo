@@ -5,9 +5,9 @@ function Rabbit:init(x, y)
     self.acceleration = MVector(0, 0)
     self.velocity = MVector(0, -2)
     self.position = MVector(x, y)
-    self.maxspeed = 24
+    self.maxspeed = 10
     self.radio = 6
-    self.maxforce = 0.1
+    self.maxforce = 0.05
     self.HP = 255
 end
 
@@ -16,7 +16,7 @@ function Rabbit:update()
     self.velocity = self.velocity:limit(self.maxspeed)
     self.position = self.velocity + self.position
     self.acceleration = self.acceleration:scalarMult(0)
-    self.HP = self.HP-1
+    self.HP = math.max(self.HP-1, 0)
 end
 
 function Rabbit:applyForce(force)
@@ -32,17 +32,30 @@ function Rabbit:seek(target)
 end
 
 function Rabbit:goals(goals)
+    if goals.n == 0 then
+      return nil
+    end
+
     local min = 999999999
     local r = 1
     for i = 1, table.getn(goals.array), 1 do
         local dist = self.position:dist(goals.array[i])
-        assert(type(dist) ~= 'nil')
+
         if min > dist then
             min = dist
             r = i
         end
     end
+
     self:seek(goals.array[r])
+
+    if min < 16 then
+      self.HP = self.HP + 255
+      table.remove(goals.array, r)
+      goals.n = goals.n - 1
+
+    end
+
 end
 
 
