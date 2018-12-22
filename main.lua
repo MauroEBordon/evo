@@ -12,6 +12,7 @@ function love.load()
         resizable = true
     })
 
+    carrots = Carrots(15)
     rabbit = Rabbit(500,350)
 
     love.keyboard.keysPressed = {}
@@ -47,5 +48,6 @@ end
 function love.draw()
     push:start()
     rabbit:render()
+    carrots:render()
     push:finish()
 end

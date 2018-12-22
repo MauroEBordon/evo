@@ -5,10 +5,10 @@ function Rabbit:init(x, y)
     self.acceleration = MVector(0, 0)
     self.velocity = MVector(0, -2)
     self.position = MVector(x, y)
-    self.direction = MVector(0, 1)
-    self.maxspeed = 4
+    self.maxspeed = 5
     self.radio = 6
-    self.maxforce = 0.3
+    self.maxforce = 0.1
+    self.HP = 255
 end
 
 function Rabbit:update()
@@ -16,6 +16,7 @@ function Rabbit:update()
     self.velocity = self.velocity:limit(self.maxspeed)
     self.position = self.velocity + self.position
     self.acceleration = self.acceleration:scalarMult(0)
+    self.HP = self.HP-1
 end
 
 function Rabbit:applyForce(force)
@@ -23,7 +24,7 @@ function Rabbit:applyForce(force)
 end
 
 function Rabbit:seek(target)
-    local desired = MVector:sub(target, self.position)
+    local desired = target - self.position
     desired = desired:setMag(self.maxspeed)
     local steer =  desired - self.velocity
     steer = steer:limit(self.maxforce)
@@ -34,5 +35,7 @@ function Rabbit:render()
     tetha = self.velocity:heading() + math.pi/2
     love.graphics.translate(self.position.x, self.position.y)
     love.graphics.rotate(tetha)
+    love.graphics.setColor(1-self.HP/255, self.HP/255, 25/255, 1)
     love.graphics.polygon('fill', 0, -self.radio*2, -self.radio, self.radio*2, self.radio, self.radio*2)
+    love.graphics.reset()
 end

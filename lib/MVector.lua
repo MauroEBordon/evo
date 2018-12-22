@@ -15,9 +15,6 @@ MVector.__tostring = function(v) return (('MVector :  %f  %f'):format(tostring(v
 MVector.__lt = function(a, b) return a.x < b.x or (a.x == b.x and a.y < b.y) end
 MVector.__le = function(a, b) return a.x <= b.x and a.y <= b.y end
 
-function MVector:sub(a, b)
-  return MVector(a.x - b.x, a.y - b.y)
-end
 
 function MVector:scalarAdd(scalar)
     return MVector(self.x + scalar, self.y + scalar)
