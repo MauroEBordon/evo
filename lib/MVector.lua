@@ -1,3 +1,4 @@
+-- My rendition to a Lua 2D Vector library
 MVector = Class{}
 
 function MVector:init(x,y)
@@ -51,14 +52,18 @@ function MVector:dot(vec)
     return self.x * vec.x + self.y * vec.y
 end
 
-function MVector:normalize()
-    local mag = self:magnitude()
-    return MVector(self.x/mag, self.y/mag)
+function MVector:cross(vec)
+  return self.x * vec.y - self.y * vec.x
 end
 
 function MVector:projection(b)
     local dot = self:dot(b)
     return b:scalarMult(dot), dot
+end
+
+function MVector:dist(vec)
+    local r = vec - self
+    return r:magnitude()
 end
 
 function MVector:setMag(mag)

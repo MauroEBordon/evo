@@ -5,7 +5,7 @@ function Rabbit:init(x, y)
     self.acceleration = MVector(0, 0)
     self.velocity = MVector(0, -2)
     self.position = MVector(x, y)
-    self.maxspeed = 5
+    self.maxspeed = 24
     self.radio = 6
     self.maxforce = 0.1
     self.HP = 255
@@ -30,6 +30,21 @@ function Rabbit:seek(target)
     steer = steer:limit(self.maxforce)
     self:applyForce(steer)
 end
+
+function Rabbit:goals(goals)
+    local min = 999999999
+    local r = 1
+    for i = 1, table.getn(goals.array), 1 do
+        local dist = self.position:dist(goals.array[i])
+        assert(type(dist) ~= 'nil')
+        if min > dist then
+            min = dist
+            r = i
+        end
+    end
+    self:seek(goals.array[r])
+end
+
 
 function Rabbit:render()
     tetha = self.velocity:heading() + math.pi/2

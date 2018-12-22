@@ -14,8 +14,8 @@ function love.load()
 
     carrots = Carrots(15)
     rabbit = Rabbit(500,350)
-
     love.keyboard.keysPressed = {}
+
 end
 
 function love.resize(w, h)
@@ -39,8 +39,7 @@ function love.update(dt)
     mouseY = love.mouse.getY()
     mouse = MVector(mouseX, mouseY)
 
-
-    rabbit:seek(mouse)
+    rabbit:goals(carrots)
     rabbit:update()
     love.keyboard.keysPressed = {}
 end
